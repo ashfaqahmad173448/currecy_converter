@@ -1,5 +1,1 @@
-    "react-redux": "^7.2.6",
-    "redux": "^4.1.2",
-    "redux-persist": "^6.0.0",
-    "redux-persist-transform-immutable": "^5.0.0",
-    "redux-saga": "^1.1.3",
+
