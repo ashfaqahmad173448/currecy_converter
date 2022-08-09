@@ -2,15 +2,19 @@ import {fromJS} from 'immutable';
 
 import {REHYDRATE} from 'redux-persist/lib/constants';
 import * as Actions from './constants';
-import {SAVE_CURRENCEY_SYMBOL} from './constants';
+import {CHANGE_CURRENCY, ON_SUCCESS_COVERSION} from './constants';
+import moment from 'moment';
 
 const initState = fromJS({
   isLogin: false,
   isLoading: false,
   currencySymbol: {},
   user: {},
-  baseCurrency: {},
-  convertedCurrency: {},
+  baseCurrency: 'PKR',
+  convertedCurrency: 'USD',
+  baseCurrencyAmount: 1,
+  convertedCurrencyAmount: '',
+  convertedCurrencyDate: moment(),
 });
 
 const authReducer = (state = initState, action = {}) => {
@@ -23,7 +27,20 @@ const authReducer = (state = initState, action = {}) => {
         .set('isLogin', true)
         .set('isLoading', false);
 
-    case Actions.SIGN_OUT_SUCCESS:
+    case Actions.CHANGE_CURRENCY:
+      return state.set([action.key], action.value);
+
+    case Actions.ON_SUCCESS_COVERSION:
+      return state
+        .set('convertedCurrencyAmount', action.payload.rate)
+        .set('convertedCurrencyDate', action.payload.date);
+
+    case Actions.REVERSE_CURRENCY:
+      return state
+        .set('baseCurrency', state.get('convertedCurrency'))
+        .set('convertedCurrency', state.get('baseCurrency'));
+
+    case Actions.SIGN_OUT:
       return initState;
 
     case Actions.SAVE_CURRENCEY_SYMBOL:

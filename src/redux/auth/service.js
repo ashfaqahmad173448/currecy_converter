@@ -15,6 +15,9 @@ export const getCurrencySymbols = () => {
 };
 
 export const convertCurency = ({from, to, amount}) => {
+  console.log(from);
+  console.log(to);
+  console.log(amount);
   const {instance: api} = new RestApi();
   if (source) {
     source.cancel('Landing Component got unmounted');

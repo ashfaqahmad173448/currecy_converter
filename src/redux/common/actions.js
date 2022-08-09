@@ -1,7 +1,8 @@
 import * as Actions from './constants';
 
-export function switchTheme() {
+export function switchTheme(payload) {
   return {
     type: Actions.CHANGE_THEME,
+    payload: payload,
   };
 }

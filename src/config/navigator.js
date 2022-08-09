@@ -8,4 +8,5 @@ export const mainStack = {
   settingMain: 'SettingScreenMain',
   setting: 'SettingScreen',
   theme: 'ThemeScreen',
+  currencyModal: 'CurrencyListModal',
 };

@@ -1,35 +1,39 @@
 import React, {useEffect, useState} from 'react';
-import {StyleSheet, View} from 'react-native';
+import {StyleSheet, View, TouchableOpacity} from 'react-native';
 import {CurrencyInput, SafeAreaView, Text} from '@common/components';
 import {SettingIcon} from '@common/components/icon';
 import NavigationService from '@utils/navigation';
 import {mainStack} from '@config/navigator';
-import {useDispatch} from 'react-redux';
-import {currencyConverter, downloadCurrencies} from '../../redux/auth/actions';
+import {connect, useDispatch} from 'react-redux';
+import moment from 'moment';
 
-const Home = () => {
+import {
+  changeCurrencyValue,
+  currencyConverter,
+  reverseCurrency,
+} from '../../redux/auth/actions';
+import ReverseCurrencyIcon from '../../common/components/icon/ReverseCurrencyIcon';
+import {
+  getBaseCurrencyAmountSelector,
+  getBaseCurrencySelector,
+  getConvertedCurrencyAmountSelector,
+  getConvertedCurrencySelector,
+} from '@redux/auth/selectors';
+import {getConvertedDatetSelector} from '../../redux/auth/selectors';
+
+const Home = ({from, to, fromAmount, toAmount, convertedDate}) => {
   const dispatch = useDispatch();
-  const [baseCurrencyValue, setBaseCurecncy] = useState('');
-  const [targetCurrencyValue, setTargetCurrencyValue] = useState('');
-
-  useEffect(() => {
-    if (dispatch) {
-      dispatch(downloadCurrencies());
-      currencyConverterAction();
-    }
-  }, [dispatch]);
-
   const openSettings = () => {
     NavigationService.navigate(mainStack.settingMain);
   };
 
-  const currencyConverterAction = () => {
-    dispatch(
-      currencyConverter({from: 'USD', to: 'PKR', amount: 1}, result => {
-        alert(JSON.stringify(result));
-      }),
-    );
+  const onReverseCurency = () => {
+    dispatch(reverseCurrency());
   };
+
+  useEffect(() => {
+    dispatch(currencyConverter({from: from, to: to, amount: fromAmount}));
+  }, [from, to]);
 
   return (
     <SafeAreaView>
@@ -42,30 +46,71 @@ const Home = () => {
             Currency Converter
           </Text>
           <CurrencyInput
-            currency={'USD'}
+            openCurrencyList={() => {
+              NavigationService.navigate(mainStack.currencyModal, {
+                from: from,
+                isFromBase: true,
+              });
+            }}
+            currency={from}
             containerStyle={styles.marginTop}
             placeholder={'Amount'}
-            value={baseCurrencyValue}
+            value={fromAmount}
             onChangeText={text => {
-              setBaseCurecncy(text);
+              dispatch(
+                changeCurrencyValue({key: 'baseCurrencyAmount', value: text}),
+              );
+              dispatch(currencyConverter({from: from, to: to, amount: text}));
             }}
           />
           <CurrencyInput
-            currency={'PKR'}
+            openCurrencyList={() => {
+              NavigationService.navigate(mainStack.currencyModal, {
+                from: to,
+                isFromBase: false,
+              });
+            }}
+            disabled={true}
+            currency={to}
+            editable={false}
             containerStyle={styles.marginTop}
             placeholder={'Amount'}
-            value={targetCurrencyValue}
-            onChangeText={text => {
-              setTargetCurrencyValue(text);
-            }}
+            value={toAmount}
+            onChangeText={text => {}}
           />
+          <Text
+            h6
+            light
+            h6Style={{
+              color: '#fff',
+              marginTop: 10,
+            }}>{`${fromAmount} ${from} = ${toAmount} ${to}  as of ${moment(
+            convertedDate,
+          ).format('MMM YYYY')}`}</Text>
+          <TouchableOpacity onPress={onReverseCurency} style={styles.flexRow}>
+            <ReverseCurrencyIcon />
+            <Text h6 h6Style={{color: '#fff', marginTop: 10}}>
+              Reverse Currency
+            </Text>
+          </TouchableOpacity>
+          <View />
         </View>
       </View>
     </SafeAreaView>
   );
 };
 
-export default Home;
+const mapStateToProps = state => {
+  return {
+    from: getBaseCurrencySelector(state),
+    to: getConvertedCurrencySelector(state),
+    fromAmount: getBaseCurrencyAmountSelector(state),
+    toAmount: getConvertedCurrencyAmountSelector(state),
+    convertedDate: getConvertedDatetSelector(state),
+  };
+};
+
+export default connect(mapStateToProps)(Home);
 
 const styles = StyleSheet.create({
   mainContaier: {
@@ -86,5 +131,9 @@ const styles = StyleSheet.create({
   },
   marginTop: {
     marginTop: 20,
+  },
+  flexRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
   },
 });

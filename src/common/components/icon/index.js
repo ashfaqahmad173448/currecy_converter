@@ -1,3 +1,4 @@
 import SettingIcon from './SettingIcon';
+import ReverseCurrencyIcon from './ReverseCurrencyIcon';
 
-export {SettingIcon};
+export {SettingIcon, ReverseCurrencyIcon};

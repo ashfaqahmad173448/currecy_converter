@@ -1,17 +1,25 @@
 import React from 'react';
-import {TextInput, View, StyleSheet} from 'react-native';
+import {TextInput, View, TouchableOpacity, StyleSheet} from 'react-native';
 import {useTheme} from 'styled-components';
 import {Text} from '@common/components';
 
-const CurrencyInput = ({currency, containerStyle, ...attributes}) => {
+const CurrencyInput = ({
+  openCurrencyList,
+  currency,
+  containerStyle,
+  ...attributes
+}) => {
   const theme = useTheme();
+
   return (
     <View style={StyleSheet.flatten([styles.container, containerStyle])}>
-      <View style={styles.currencyContainer}>
+      <TouchableOpacity
+        onPress={openCurrencyList}
+        style={styles.currencyContainer}>
         <Text h5 h5Style={{color: theme.colors.text}}>
           {currency}
         </Text>
-      </View>
+      </TouchableOpacity>
       <View style={styles.inputContainer(theme)}>
         <TextInput
           keyboardType={'numeric'}

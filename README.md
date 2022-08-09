@@ -1,3 +1,3 @@
 
-   1-Implemented the API to get all currency symbols and store to redux
-   2-Implemented the API to covert the currency 
+   1-Make the currency converted fully functional
+   2-Implemented the design of Setting and theme screen and make it functional

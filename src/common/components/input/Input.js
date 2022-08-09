@@ -24,10 +24,7 @@ const Input = ({
       {!!errorMessage && (
         <Text
           {...errorProps}
-          style={StyleSheet.flatten([
-            styles.error(theme),
-            errorStyle && errorStyle,
-          ])}>
+          style={StyleSheet.flatten([styles.error, errorStyle && errorStyle])}>
           {errorMessage}
         </Text>
       )}

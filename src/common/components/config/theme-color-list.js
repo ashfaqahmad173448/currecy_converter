@@ -1,4 +1,4 @@
-import {blue, light, orange, green, purple} from './colors';
+import {blue, orange, green, purple, grey8} from './colors';
 
 export const LIGHT = 'color/LIGHT';
 export const BLUE = 'color/BLUE';
@@ -10,7 +10,7 @@ export const THEME_LIST = [
   {
     key: LIGHT,
     title: 'Light',
-    color: light,
+    color: grey8,
   },
   {
     key: BLUE,

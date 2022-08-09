@@ -8,6 +8,14 @@ export function downloadCurrencies() {
   return {type: Actions.DOWNLOAD_CURRENCY_SYMBOL};
 }
 
+export function changeCurrencyValue({key, value}) {
+  return {type: Actions.CHANGE_CURRENCY, key, value};
+}
+
+export function reverseCurrency() {
+  return {type: Actions.REVERSE_CURRENCY};
+}
+
 export function signIn({username, password}) {
   return {
     type: Actions.SIGN_IN,
