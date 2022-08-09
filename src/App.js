@@ -22,6 +22,8 @@ enableScreens(false);
 
 const App: () => Node = () => {
   useEffect(() => {
+    RNBootSplash.hide({fade: true});
+
     const init = async () => {
       // …do multiple sync or async tasks
     };

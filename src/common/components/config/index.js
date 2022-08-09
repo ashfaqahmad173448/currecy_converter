@@ -8,6 +8,8 @@ import {
   orangeColor,
 } from './colors';
 
+import {light, bold, medium, regular} from './fonts';
+
 import {
   THEME_LIST,
   LIGHT,
@@ -18,6 +20,7 @@ import {
 } from './theme-color-list';
 
 import ViewPropTypes from './ViewPropTypes';
+import fonts, {sizes, lineHeights} from './fonts';
 
 export {
   lightColor,
@@ -33,4 +36,11 @@ export {
   ORANGE,
   ViewPropTypes,
   getStatusBarHeight,
+  light,
+  bold,
+  medium,
+  regular,
+  fonts,
+  sizes,
+  lineHeights,
 };

@@ -11,7 +11,7 @@ const persistConfig = {
   key: 'root',
   transforms: [immutableTransform()],
   storage: AsyncStorage,
-  whitelist: ['common'],
+  whitelist: ['common', 'auth'],
 };
 
 const composeEnhancers =

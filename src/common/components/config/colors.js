@@ -11,6 +11,7 @@ export const grey7 = '#383838';
 export const grey8 = '#1e1e1e';
 export const grey9 = '#2C2C2C';
 export const black = '#121212';
+export const error = 'rgba(173,28,28,0.9)';
 
 export const light = white;
 export const blue = '#0038ab';
@@ -23,7 +24,7 @@ export const lightColor = {
   colors: {
     primary: black,
     secondary: grey6,
-    bgColor: 'red',
+    bgColor: white,
     bgColorSecondary: grey1,
     white: white,
     grey1: grey1,

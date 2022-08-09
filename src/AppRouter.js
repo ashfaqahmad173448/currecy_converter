@@ -1,8 +1,11 @@
 import React from 'react';
-import {ThemeProvider} from 'styled-components/native';
-import Router from '@navigation/root-switch';
 import {StatusBar} from 'react-native';
+import {ThemeProvider} from 'styled-components/native';
+import FlashMessage from 'react-native-flash-message';
+import Router from '@navigation/root-switch';
 import {themeSelector} from './redux/common/selectors';
+import {Loading} from '@common/components';
+
 import {connect} from 'react-redux';
 import {
   BLUE,
@@ -15,7 +18,7 @@ import {
   orangeColor,
   PURPLE,
   purpleColor,
-} from './components/config';
+} from './common/components/config';
 
 const AppRouter = ({theme}) => {
   const getColorTheme = themeKey => {
@@ -42,6 +45,8 @@ const AppRouter = ({theme}) => {
     <ThemeProvider theme={themeColors}>
       <StatusBar barStyle={barStyle} backgroundColor={'transparent'} />
       <Router />
+      <Loading />
+      <FlashMessage position="top" />
     </ThemeProvider>
   );
 };

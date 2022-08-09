@@ -1,6 +1,6 @@
 import * as Actions from './constants';
 import {fromJS} from 'immutable';
-import {LIGHT} from '../../components/config';
+import {LIGHT} from '../../common/components/config';
 
 export const initState = fromJS({
   loading: false,
