@@ -2,10 +2,12 @@ import {fromJS} from 'immutable';
 
 import {REHYDRATE} from 'redux-persist/lib/constants';
 import * as Actions from './constants';
+import {SAVE_CURRENCEY_SYMBOL} from './constants';
 
 const initState = fromJS({
   isLogin: false,
   isLoading: false,
+  currencySymbol: {},
   user: {},
   baseCurrency: {},
   convertedCurrency: {},
@@ -23,6 +25,9 @@ const authReducer = (state = initState, action = {}) => {
 
     case Actions.SIGN_OUT_SUCCESS:
       return initState;
+
+    case Actions.SAVE_CURRENCEY_SYMBOL:
+      return state.set('currencySymbol', fromJS(action.payload));
 
     case Actions.UPDATE_USER_SUCCESS:
       const userOld = state.get('user');

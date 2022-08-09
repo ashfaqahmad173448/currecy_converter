@@ -1,7 +1,7 @@
 import {call, put, takeEvery} from 'redux-saga/effects';
 import {showMessage} from 'react-native-flash-message';
 import * as Actions from './constants';
-import {loginWithUsername} from './service';
+import {convertCurency, getCurrencySymbols, loginWithUsername} from './service';
 import {signOut} from './actions';
 
 function* signInWithUserName({username, password}) {
@@ -24,6 +24,28 @@ function* signInWithUserName({username, password}) {
   }
 }
 
+function* downloadCurrencySymbol() {
+  const currencySymbol = yield call(getCurrencySymbols);
+  if (currencySymbol.data.success) {
+    yield put({
+      type: Actions.SAVE_CURRENCEY_SYMBOL,
+      payload: currencySymbol.data.symbols,
+    });
+  }
+}
+
+function* convertCurrency({from, to, amount, cb}) {
+  const currencySymbol = yield call(convertCurency, {from, to, amount});
+  if (currencySymbol.data.success) {
+    if (cb) {
+      yield call(cb, {
+        date: currencySymbol.data.date,
+        rate: currencySymbol.data.info.rate,
+      });
+    }
+  }
+}
+
 function* doLoginSuccess(user = {}) {
   yield put({
     type: Actions.SIGN_IN_SUCCESS,
@@ -34,4 +56,6 @@ function* doLoginSuccess(user = {}) {
 export default function* authSaga() {
   yield takeEvery(Actions.SIGN_IN, signInWithUserName);
   yield takeEvery(Actions.SIGN_OUT, signOut);
+  yield takeEvery(Actions.DOWNLOAD_CURRENCY_SYMBOL, downloadCurrencySymbol);
+  yield takeEvery(Actions.CONVERT_CURRENCY, convertCurrency);
 }

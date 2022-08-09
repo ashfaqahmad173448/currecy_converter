@@ -22,8 +22,6 @@ import {
 
 const AppRouter = ({theme}) => {
   const getColorTheme = themeKey => {
-    console.log(themeKey);
-    console.log(LIGHT);
     if (themeKey === LIGHT) {
       return {barStyle: 'light-content', themeColors: lightColor};
     } else if (themeKey === BLUE) {

@@ -1,5 +1,13 @@
 import * as Actions from './constants';
 
+export function currencyConverter({from, to, amount}, cb: () => {}) {
+  return {type: Actions.CONVERT_CURRENCY, from, to, amount, cb};
+}
+
+export function downloadCurrencies() {
+  return {type: Actions.DOWNLOAD_CURRENCY_SYMBOL};
+}
+
 export function signIn({username, password}) {
   return {
     type: Actions.SIGN_IN,

@@ -23,6 +23,7 @@ export const lightColor = {
   key: LIGHT,
   colors: {
     primary: black,
+    text: black,
     secondary: grey6,
     bgColor: white,
     bgColorSecondary: grey1,
@@ -46,6 +47,7 @@ export const blueColor = {
   key: BLUE,
   colors: {
     primary: black,
+    text: '#0038ab',
     secondary: grey6,
     bgColor: '#0038ab',
     bgColorSecondary: 'rgba(0,56,171,0.6)',
@@ -69,6 +71,7 @@ export const orangeColor = {
   key: ORANGE,
   colors: {
     primary: black,
+    text: '#e59007',
     secondary: grey6,
     bgColor: '#e59007',
     bgColorSecondary: 'rgba(229,144,7,0.6)',
@@ -92,6 +95,7 @@ export const greenColor = {
   key: GREEN,
   colors: {
     primary: black,
+    text: '#008000',
     secondary: grey6,
     bgColor: '#008000',
     bgColorSecondary: 'rgba(0,128,0,0.6)',
@@ -115,6 +119,7 @@ export const purpleColor = {
   key: PURPLE,
   colors: {
     primary: black,
+    text: '#800080',
     secondary: grey6,
     bgColor: '#800080',
     bgColorSecondary: 'rgba(128,0,128,0.6)',
