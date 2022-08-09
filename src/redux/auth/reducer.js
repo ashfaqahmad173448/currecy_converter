@@ -2,7 +2,7 @@ import {fromJS} from 'immutable';
 
 import {REHYDRATE} from 'redux-persist/lib/constants';
 import * as Actions from './constants';
-import {CHANGE_CURRENCY, ON_SUCCESS_COVERSION} from './constants';
+import {CHANGE_CURRENCY} from './constants';
 import moment from 'moment';
 
 const initState = fromJS({
@@ -28,7 +28,7 @@ const authReducer = (state = initState, action = {}) => {
         .set('isLoading', false);
 
     case Actions.CHANGE_CURRENCY:
-      return state.set([action.key], action.value);
+      return state.set(action.key, action.value);
 
     case Actions.ON_SUCCESS_COVERSION:
       return state
@@ -53,15 +53,18 @@ const authReducer = (state = initState, action = {}) => {
         ...action.payload,
       };
       return state.set('user', fromJS(user));
-
     case REHYDRATE:
       if (action.payload && action.payload.auth) {
-        // Restore only user and isLogin state
         const {auth} = action.payload;
         return initState.merge(
           fromJS({
             user: auth.get('user'),
             isLogin: auth.get('isLogin'),
+            currencySymbol: auth.get('currencySymbol'),
+            baseCurrency: auth.get('baseCurrency'),
+            convertedCurrency: auth.get('convertedCurrency'),
+            convertedCurrencyAmount: auth.get('convertedCurrencyAmount'),
+            convertedCurrencyDate: auth.get('convertedCurrencyDate'),
           }),
         );
       } else {

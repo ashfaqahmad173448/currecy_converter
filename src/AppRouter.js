@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {StatusBar} from 'react-native';
 import {ThemeProvider} from 'styled-components/native';
 import FlashMessage from 'react-native-flash-message';
@@ -6,7 +6,7 @@ import Router from '@navigation/root-switch';
 import {themeSelector} from './redux/common/selectors';
 import {Loading} from '@common/components';
 
-import {connect} from 'react-redux';
+import {connect, useDispatch} from 'react-redux';
 import {
   BLUE,
   blueColor,
@@ -19,8 +19,17 @@ import {
   PURPLE,
   purpleColor,
 } from './common/components/config';
+import {currencyListSelector} from './redux/auth/selectors';
+import {downloadCurrencies} from './redux/auth/actions';
 
-const AppRouter = ({theme}) => {
+const AppRouter = ({theme, currencyList}) => {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    if (currencyList.isEmpty()) {
+      dispatch(downloadCurrencies());
+    }
+  }, []);
+
   const getColorTheme = themeKey => {
     if (themeKey === LIGHT) {
       return {barStyle: 'light-content', themeColors: lightColor};
@@ -52,6 +61,7 @@ const AppRouter = ({theme}) => {
 const mapStateToProps = state => {
   return {
     theme: themeSelector(state),
+    currencyList: currencyListSelector(state),
   };
 };
 export default connect(mapStateToProps)(AppRouter);

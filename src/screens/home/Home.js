@@ -33,7 +33,7 @@ const Home = ({from, to, fromAmount, toAmount, convertedDate}) => {
 
   useEffect(() => {
     dispatch(currencyConverter({from: from, to: to, amount: fromAmount}));
-  }, [from, to]);
+  }, [fromAmount, from, to, dispatch]);
 
   return (
     <SafeAreaView>
@@ -55,12 +55,11 @@ const Home = ({from, to, fromAmount, toAmount, convertedDate}) => {
             currency={from}
             containerStyle={styles.marginTop}
             placeholder={'Amount'}
-            value={fromAmount}
+            value={fromAmount.toString()}
             onChangeText={text => {
               dispatch(
                 changeCurrencyValue({key: 'baseCurrencyAmount', value: text}),
               );
-              dispatch(currencyConverter({from: from, to: to, amount: text}));
             }}
           />
           <CurrencyInput
@@ -75,8 +74,7 @@ const Home = ({from, to, fromAmount, toAmount, convertedDate}) => {
             editable={false}
             containerStyle={styles.marginTop}
             placeholder={'Amount'}
-            value={toAmount}
-            onChangeText={text => {}}
+            value={toAmount.toString()}
           />
           <Text
             h6
@@ -86,7 +84,7 @@ const Home = ({from, to, fromAmount, toAmount, convertedDate}) => {
               marginTop: 10,
             }}>{`${fromAmount} ${from} = ${toAmount} ${to}  as of ${moment(
             convertedDate,
-          ).format('MMM YYYY')}`}</Text>
+          ).format('DD MMM YYYY')}`}</Text>
           <TouchableOpacity onPress={onReverseCurency} style={styles.flexRow}>
             <ReverseCurrencyIcon />
             <Text h6 h6Style={{color: '#fff', marginTop: 10}}>

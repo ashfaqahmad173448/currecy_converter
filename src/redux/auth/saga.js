@@ -25,11 +25,18 @@ function* signInWithUserName({username, password}) {
 }
 
 function* downloadCurrencySymbol() {
-  const currencySymbol = yield call(getCurrencySymbols);
-  if (currencySymbol.data.success) {
-    yield put({
-      type: Actions.SAVE_CURRENCEY_SYMBOL,
-      payload: currencySymbol.data.symbols,
+  try {
+    const currencySymbol = yield call(getCurrencySymbols);
+    if (currencySymbol.data.success) {
+      yield put({
+        type: Actions.SAVE_CURRENCEY_SYMBOL,
+        payload: currencySymbol.data.symbols,
+      });
+    }
+  } catch (e) {
+    showMessage({
+      message: e.message,
+      type: 'danger',
     });
   }
 }
@@ -37,6 +44,7 @@ function* downloadCurrencySymbol() {
 function* convertCurrency({from, to, amount, cb}) {
   try {
     const currencySymbol = yield call(convertCurency, {from, to, amount});
+    console.log(currencySymbol.data);
     if (currencySymbol.data.success) {
       yield put({
         type: Actions.ON_SUCCESS_COVERSION,
@@ -54,6 +62,7 @@ function* convertCurrency({from, to, amount, cb}) {
       }
     }
   } catch (e) {
+    console.log(e);
     showMessage({
       message: e.message,
       type: 'danger',

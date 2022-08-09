@@ -1,17 +1,24 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {useNavigation} from '@react-navigation/native';
 import {Header, SafeAreaView} from '@common/components';
 import {connect, useDispatch} from 'react-redux';
-import {currencyListSelector} from '@redux/auth/selectors';
 import {FlatList} from 'react-native';
 import CurrencyItem from './component/CurrencyItem';
-import {changeCurrencyValue} from '../../../redux/auth/actions';
+import {changeCurrencyValue, downloadCurrencies} from '@redux/auth/actions';
+import {currencyListSelector} from '../../../redux/auth/selectors';
 
-const CurrencyListModal = (props, {currencyList}) => {
+const CurrencyListModal = ({route, currencyList}) => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
-  const from = props.route.params.from;
-  const isFromBase = props.route.params.isFromBase;
+  const from = route.params.from;
+  const isFromBase = route.params.isFromBase;
+
+  useEffect(() => {
+    if (currencyList.isEmpty()) {
+      dispatch(downloadCurrencies());
+    }
+  }, []);
+
   return (
     <SafeAreaView>
       <Header title={'Base  Currency'} />
@@ -28,7 +35,7 @@ const CurrencyListModal = (props, {currencyList}) => {
               dispatch(changeCurrencyValue({key: key, value: item[0]}));
               navigation.goBack();
             }}
-            selectedCurrency={'USD'}
+            selectedCurrency={from}
             currencySymbol={item[0]}
           />
         )}

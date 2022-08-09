@@ -21,19 +21,11 @@ const {store, persistor} = configureStore();
 enableScreens(false);
 
 const App: () => Node = () => {
-  useEffect(() => {
-    RNBootSplash.hide({fade: true});
-
-    const init = async () => {
-      // …do multiple sync or async tasks
-    };
-    init().finally(async () => {
-      await RNBootSplash.hide({fade: true});
-      console.log('Bootsplash has been hidden successfully');
-    });
-  }, []);
   return (
     <NavigationContainer
+      onReady={() => {
+        RNBootSplash.hide({fade: true});
+      }}
       ref={navigationRef =>
         NavigationService.setTopLevelNavigator(navigationRef)
       }>

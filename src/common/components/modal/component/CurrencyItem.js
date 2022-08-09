@@ -12,7 +12,7 @@ const CurrencyItem = ({onPress, selectedCurrency, currencySymbol}) => {
         {currencySymbol}
       </Text>
       {selectedCurrency === currencySymbol ? (
-        <Icon size={20} name={'checkcircle'} color={theme.colors.text} />
+        <Icon size={20} name={'checkcircle'} color={theme.colors.grey5} />
       ) : null}
     </TouchableOpacity>
   );
