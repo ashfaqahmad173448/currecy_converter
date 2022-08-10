@@ -15,15 +15,6 @@ export const getCurrencySymbols = () => {
 };
 
 export const convertCurency = ({from, to, amount}) => {
-  console.log(from);
-  console.log(to);
-  console.log(amount);
   const {instance: api} = new RestApi();
-  if (source) {
-    source.cancel('Landing Component got unmounted');
-  }
-  source = axios.CancelToken.source();
-  return api.get(`convert?to=${to}&from=${from}&amount=${amount}`, {
-    cancelToken: source.token,
-  });
+  return api.get(`convert?to=${to}&from=${from}&amount=${amount}`);
 };
